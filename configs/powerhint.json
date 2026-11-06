@@ -1,151 +1,32 @@
 {
   "Nodes": [
     {
-      "Name": "CPULittleClusterMaxFreq",
-      "Path": "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq",
+      "Name": "CPULittleClusterDownRateLimitUs",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us",
       "Values": [
-        "2000000",
-        "1800000",
-        "1700000",
-        "1600000"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "CPULittleClusterMinFreq",
-      "Path": "/sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq",
-      "Values": [
-        "-1",
-        "1500000",
-        "1200000",
-        "950000",
-        "650000"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "CPUBigClusterMaxFreq",
-      "Path": "/sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq",
-      "Values": [
-        "2200000",
-        "2000000",
-        "1800000",
-        "1600000"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "CPUBigClusterMinFreq",
-      "Path": "/sys/devices/system/cpu/cpufreq/policy6/scaling_min_freq",
-      "Values": [
-        "-1",
-        "1400000",
-        "1200000",
-        "1000000",
-        "700000"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "Policy0UpRate",
-      "Path": "/sys/devices/system/cpu/cpufreq/policy0/sugov_ext/up_rate_limit_us",
-      "Values": [
-        "1000",
-        "500",
-        "0"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "Policy0DownRate",
-      "Path": "/sys/devices/system/cpu/cpufreq/policy0/sugov_ext/down_rate_limit_us",
-      "Values": [
-        "5000",
         "20000",
-        "60000",
-        "0"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "Policy6UpRate",
-      "Path": "/sys/devices/system/cpu/cpufreq/policy6/sugov_ext/up_rate_limit_us",
-      "Values": [
-        "1000",
-        "500",
-        "0"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "Policy6DownRate",
-      "Path": "/sys/devices/system/cpu/cpufreq/policy6/sugov_ext/down_rate_limit_us",
-      "Values": [
         "5000",
+        "2000",
+        "500"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true
+    },
+    {
+      "Name": "CPUBigClusterDownRateLimitUs",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy6/schedutil/down_rate_limit_us",
+      "Values": [
         "20000",
-        "60000",
-        "0"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "TopAppUclampMin",
-      "Path": "/dev/cpuctl/top-app/cpu.uclamp.min",
-      "Values": [
-        "0",
-        "25",
-        "40",
-        "50",
-        "75",
-        "100"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "ForegroundUclampMin",
-      "Path": "/dev/cpuctl/foreground/cpu.uclamp.min",
-      "Values": [
-        "0",
-        "25",
-        "50",
-        "75",
-        "100"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "TopAppLatencySensitive",
-      "Path": "/dev/cpuctl/top-app/cpu.uclamp.latency_sensitive",
-      "Values": [
-        "0",
-        "1"
-      ],
-      "DefaultIndex": 0,
-      "ResetOnInit": true
-    },
-    {
-      "Name": "ForegroundLatencySensitive",
-      "Path": "/dev/cpuctl/foreground/cpu.uclamp.latency_sensitive",
-      "Values": [
-        "0",
-        "1"
+        "5000",
+        "2000",
+        "500"
       ],
       "DefaultIndex": 0,
       "ResetOnInit": true
     },
     {
       "Name": "GPUSchedMode",
-      "Path": "/sys/devices/platform/soc/13000000.mali/js_ctx_scheduling_mode",
+      "Path": "/sys/devices/platform/13000000.mali/js_ctx_scheduling_mode",
       "Values": [
         "0",
         "1"
@@ -155,7 +36,20 @@
     },
     {
       "Name": "GPUSchedPeriod",
-      "Path": "/sys/devices/platform/soc/13000000.mali/js_scheduling_period",
+      "Path": "/sys/devices/platform/13000000.mali/js_scheduling_period",
+      "Values": [
+        "100",
+        "75",
+        "50",
+        "25",
+        "0"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true
+    },
+    {
+      "Name": "GPUDVFSInterval",
+      "Path": "/sys/devices/platform/13000000.mali/dvfs_period",
       "Values": [
         "100",
         "75",
@@ -165,14 +59,73 @@
       "ResetOnInit": true
     },
     {
-      "Name": "GPUDVFSInterval",
-      "Path": "/sys/devices/platform/soc/13000000.mali/dvfs_period",
+      "Name": "DRAMOppMin",
+      "Path": "/proc/perfmgr/boost_ctrl/dram_ctrl/ddr",
+      "Values": [
+        "1",
+        "-1"
+      ],
+      "DefaultIndex": 1,
+      "ResetOnInit": true
+    },
+    {
+      "Name": "CCIFreqMode",
+      "Path": "/proc/cpufreq/cpufreq_cci_mode",
+      "Values": [
+        "0",
+        "1"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true
+    },
+    {
+      "Name": "SchedBoost",
+      "Path": "/proc/perfmgr/boost_ctrl/eas_ctrl/sched_boost",
+      "Values": [
+        "1",
+        "2",
+        "6"
+      ],
+      "DefaultIndex": 1,
+      "ResetOnInit": true
+    },
+    {
+      "Name": "UclampMin",
+      "Path": "/proc/perfmgr/boost_ctrl/eas_ctrl/perfserv_uclamp_min",
       "Values": [
         "100",
         "75",
-        "50"
+        "50",
+        "25",
+        "0"
       ],
-      "DefaultIndex": 0,
+      "DefaultIndex": 4,
+      "ResetOnInit": true
+    },
+    {
+      "Name": "FGUclampMin",
+      "Path": "/proc/perfmgr/boost_ctrl/eas_ctrl/perfserv_fg_uclamp_min",
+      "Values": [
+        "100",
+        "75",
+        "50",
+        "25",
+        "0"
+      ],
+      "DefaultIndex": 4,
+      "ResetOnInit": true
+    },
+    {
+      "Name": "TAUclampMin",
+      "Path": "/proc/perfmgr/boost_ctrl/eas_ctrl/perfserv_ta_uclamp_min",
+      "Values": [
+        "100",
+        "75",
+        "50",
+        "25",
+        "0"
+      ],
+      "DefaultIndex": 4,
       "ResetOnInit": true
     },
     {
@@ -204,10 +157,10 @@
     },
     {
       "Name": "DoubleTapToWake",
-      "Path": "/proc/tp_gesture",
+      "Path": "/dev/input/event2",
       "Values": [
-        "1",
-        "0"
+        "0",
+        "1"
       ],
       "DefaultIndex": 0,
       "ResetOnInit": true
@@ -221,160 +174,58 @@
       "Value": "SUSTAINED_PERFORMANCE"
     },
     {
-      "PowerHint": "SUSTAINED_PERFORMANCE",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2000000"
-    },
-    {
-      "PowerHint": "SUSTAINED_PERFORMANCE",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 0,
-      "Value": "1800000"
-    },
-    {
       "PowerHint": "INTERACTION",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 0,
-      "Value": "1500000"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1200000"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "TopAppUclampMin",
-      "Duration": 0,
-      "Value": "100"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "ForegroundUclampMin",
-      "Duration": 0,
-      "Value": "100"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "TopAppLatencySensitive",
+      "Node": "CCIFreqMode",
       "Duration": 0,
       "Value": "1"
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "ForegroundLatencySensitive",
+      "Node": "CPULittleClusterDownRateLimitUs",
       "Duration": 0,
-      "Value": "1"
+      "Value": "500"
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "Policy0UpRate",
+      "Node": "CPUBigClusterDownRateLimitUs",
       "Duration": 0,
-      "Value": "0"
+      "Value": "500"
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "Policy6UpRate",
+      "Node": "SchedBoost",
       "Duration": 0,
-      "Value": "0"
+      "Value": "2"
     },
     {
-      "PowerHint": "INTERACTION",
-      "Node": "Policy0DownRate",
-      "Duration": 0,
-      "Value": "20000"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "Policy6DownRate",
-      "Duration": 0,
-      "Value": "20000"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "GPUSchedPeriod",
-      "Duration": 0,
+      "PowerHint": "LAUNCH",
+      "Node": "TAUclampMin",
+      "Duration": 2500,
       "Value": "50"
     },
     {
-      "PowerHint": "INTERACTION",
-      "Node": "GPUDVFSInterval",
-      "Duration": 0,
+      "PowerHint": "LAUNCH",
+      "Node": "FGUclampMin",
+      "Duration": 2500,
       "Value": "50"
     },
     {
-      "PowerHint": "INTERACTION",
-      "Node": "GPUSchedMode",
-      "Duration": 0,
-      "Value": "1"
-    },
-    {
       "PowerHint": "LAUNCH",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 3000,
-      "Value": "1400000"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 3000,
-      "Value": "1500000"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "TopAppUclampMin",
-      "Duration": 3000,
+      "Node": "UclampMin",
+      "Duration": 2500,
       "Value": "100"
     },
     {
       "PowerHint": "LAUNCH",
-      "Node": "ForegroundUclampMin",
-      "Duration": 3000,
-      "Value": "100"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "TopAppLatencySensitive",
-      "Duration": 3000,
+      "Node": "DRAMOppMin",
+      "Duration": 2500,
       "Value": "1"
     },
     {
       "PowerHint": "LAUNCH",
-      "Node": "ForegroundLatencySensitive",
-      "Duration": 3000,
-      "Value": "1"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "Policy0UpRate",
-      "Duration": 3000,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "Policy6UpRate",
-      "Duration": 3000,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "Policy0DownRate",
-      "Duration": 3000,
-      "Value": "60000"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "Policy6DownRate",
-      "Duration": 3000,
-      "Value": "60000"
-    },
-    {
-      "PowerHint": "AUDIO_STREAMING_LOW_LATENCY",
-      "Node": "PowerHALAudioState",
-      "Duration": 0,
-      "Value": "AUDIO_STREAMING_LOW_LATENCY"
+      "Node": "SchedBoost",
+      "Duration": 2500,
+      "Value": "6"
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
@@ -386,19 +237,55 @@
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "GPUSchedPeriod",
       "Duration": 0,
-      "Value": "50"
+      "Value": "100"
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "GPUDVFSInterval",
       "Duration": 0,
-      "Value": "50"
+      "Value": "75"
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "GPUSchedMode",
       "Duration": 0,
       "Value": "1"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "CPULittleClusterDownRateLimitUs",
+      "Duration": 0,
+      "Value": "20000"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "CPUBigClusterDownRateLimitUs",
+      "Duration": 0,
+      "Value": "20000"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GPUSchedPeriod",
+      "Duration": 0,
+      "Value": "100"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GPUDVFSInterval",
+      "Duration": 0,
+      "Value": "100"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GPUSchedMode",
+      "Duration": 0,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "SchedBoost",
+      "Duration": 0,
+      "Value": "6"
     },
     {
       "PowerHint": "DOUBLE_TAP_TO_WAKE",

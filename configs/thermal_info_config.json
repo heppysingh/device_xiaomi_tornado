@@ -1,7 +1,7 @@
 {
     "Sensors":[
         {
-            "Name":"cpu_big1",
+            "Name":"cpu-little-core0",
             "Type":"CPU",
             "HotThreshold":[
                 "NaN",
@@ -10,13 +10,13 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
         {
-            "Name":"cpu_big2",
+            "Name":"cpu-little-core1",
             "Type":"CPU",
             "HotThreshold":[
                 "NaN",
@@ -25,13 +25,13 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
         {
-            "Name":"cpu_big3",
+            "Name":"cpu-little-core2",
             "Type":"CPU",
             "HotThreshold":[
                 "NaN",
@@ -40,13 +40,13 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
         {
-            "Name":"cpu_big4",
+            "Name":"cpu-little-core3",
             "Type":"CPU",
             "HotThreshold":[
                 "NaN",
@@ -55,13 +55,13 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
         {
-            "Name":"cpu_little1",
+            "Name":"cpu-little-core4",
             "Type":"CPU",
             "HotThreshold":[
                 "NaN",
@@ -70,13 +70,13 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
         {
-            "Name":"cpu_little2",
+            "Name":"cpu-little-core5",
             "Type":"CPU",
             "HotThreshold":[
                 "NaN",
@@ -85,13 +85,13 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
         {
-            "Name":"cpu_little3",
+            "Name":"cpu-big-core6-0",
             "Type":"CPU",
             "HotThreshold":[
                 "NaN",
@@ -100,13 +100,13 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
         {
-            "Name":"cpu_little4",
+            "Name":"cpu-big-core7-0",
             "Type":"CPU",
             "HotThreshold":[
                 "NaN",
@@ -115,7 +115,22 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
+                117.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"gpu0",
+            "Type":"GPU",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
@@ -130,22 +145,7 @@
                 85.0,
                 90.0,
                 100.0,
-                113.0
-            ],
-            "VrThreshold":50.0,
-            "Multiplier":0.001
-        },
-        {
-            "Name":"gpu2",
-            "Type":"GPU",
-            "HotThreshold":[
-                "NaN",
-                "NaN",
-                "NaN",
-                85.0,
-                90.0,
-                100.0,
-                113.0
+                117.0
             ],
             "VrThreshold":50.0,
             "Multiplier":0.001
@@ -166,7 +166,7 @@
             "Multiplier":0.001
         },
         {
-            "Name":"ltepa_ntc",
+            "Name":"mtktsbtsmdpa",
             "Type":"POWER_AMPLIFIER",
             "HotThreshold":[
                 "NaN",
@@ -181,7 +181,7 @@
             "Multiplier":0.001
         },
         {
-            "Name":"ap_ntc",
+            "Name":"mtktsAP",
             "Type":"SKIN",
             "HotThreshold":[
                 "NaN",
@@ -205,14 +205,6 @@
         {
             "Name":"charger-cooler",
             "Type":"BATTERY"
-        },
-        {
-            "Name":"brightness0-clone",
-            "Type":"DISPLAY"
-        },
-        {
-            "Name":"lcd-backlight",
-            "Type":"DISPLAY"
         }
     ]
 }

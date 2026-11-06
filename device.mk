@@ -1,5 +1,6 @@
 #
-# SPDX-FileCopyrightText: The LineageOS Project
+# Copyright (C) 2026 The LineageOS Project
+#
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -9,20 +10,39 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 # Enforce generic ramdisk allow list
 $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
 
-# Inherit launch_with_vendor_ramdisk product
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
-
-# Project ID Quota
+# Enable project quotas and casefolding for emulated storage without sdcardfs
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
+# Installs gsi keys into ramdisk, to boot a developer GSI with verified boot.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
 
 # Inherit common MediaTek IMS
 $(call inherit-product, vendor/mediatek/ims/ims.mk)
 
-DEVICE_PATH := device/xiaomi/air
+DEVICE_PATH := device/xiaomi/tornado
 
 # Linker config
 PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += \
     $(DEVICE_PATH)/configs/linker.config.json
+
+# Shipping API level
+PRODUCT_SHIPPING_API_LEVEL := 33
+
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(DEVICE_PATH) \
+    hardware/google/pixel \
+    hardware/google/interfaces \
+    hardware/lineage/interfaces/power-libperfmgr \
+    hardware/mediatek \
+    hardware/mediatek/hidl/mtkpower/1.2/default \
+    hardware/mediatek/libaedv \
+    hardware/mediatek/libmtkperf_client \
+    hardware/xiaomi
+
+# Device uses high-density artwork where available
+PRODUCT_AAPT_CONFIG := normal
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Virtual A/B
 PRODUCT_PACKAGES += \
@@ -46,7 +66,9 @@ PRODUCT_PACKAGES += \
     tune2fs.vendor_ramdisk
 
 PRODUCT_PACKAGES += \
+    checkpoint_gc \
     update_engine \
+    update_engine_client \
     update_engine_sideload \
     update_verifier
 
@@ -101,149 +123,71 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml \
     frameworks/native/data/etc/android.hardware.camera.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.xml
 
-# Device uses high-density artwork where available
-PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := xxhdpi
-
 # Dynamic Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# API
-PRODUCT_SHIPPING_API_LEVEL := 33
-BOARD_SHIPPING_API_LEVEL := 33
-
-# DRM (Clearkey)
-PRODUCT_PACKAGES += \
-    com.android.hardware.drm.clearkey
-
 # Fastboot
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot-service.example_recovery \
     fastbootd
 
 # Fingerprint
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint-service.xiaomi \
-    vendor.xiaomi.hardware.fx.tunnel@1.0.vendor \
     vendor.xiaomi.hardware.fingerprintextension@1.0.vendor \
     vendor.goodix.hardware.biometrics.fingerprint@2.1.vendor
 
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
-
-# FM Radio
-PRODUCT_PACKAGES += \
-    FMRadio
-
-# Gatekeeper
-PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0-impl \
-    android.hardware.gatekeeper@1.0-service
-
-# GNSS
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml
-
-# Graphics
-PRODUCT_PACKAGES += \
-    android.hardware.memtrack-service.mediatek \
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.faketouch.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.faketouch.xml \
-    frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.version-1_3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
-    frameworks/native/data/etc/android.software.opengles.deqp.level-2022-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level.xml \
-    frameworks/native/data/etc/android.software.vulkan.deqp.level-2022-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml
+    frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/idc/,$(TARGET_COPY_OUT_VENDOR)/usr/idc) \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/keylayout/,$(TARGET_COPY_OUT_VENDOR)/usr/keylayout)
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health-service.mediatek \
-    android.hardware.health-service.mediatek-recovery
+    android.hardware.health-service.example \
+    android.hardware.health-service.example_recovery
 
 # Init
 PRODUCT_PACKAGES += \
     fstab.mt6835 \
-    fstab.mt6835.vendor_ramdisk \
+    init.batterysecret.rc \
     init.connectivity.common.rc \
     init_connectivity.rc \
+    init.fingerprint.rc \
+    init.insmod.mt6835.cfg \
+    init.insmod.sh \
     init.mi_thermald.rc \
     init.modem.rc \
-    init.mt6835.rc \
     init.mt6835.power.rc \
+    init.mt6835.rc \
     init.mt6835.usb.rc \
-    init.recovery.mt6835.rc \
     init.mtkgki.rc \
     init.project.rc \
+    init.recovery.mt6835.rc \
     init.sensor_2_0.rc \
     ueventd.mt6835.rc
 
-PRODUCT_PACKAGES += \
-    init.insmod.sh \
-    init.insmod.mt6835.cfg
-
-# Lights
-PRODUCT_PACKAGES += \
-    android.hardware.light-service.lineage
-
-# Media
-$(call soong_config_set_bool,android_hardware_mediatek_codec2,link_v33_libstagefright_foundation,true)
-PRODUCT_PACKAGES += \
-    android.hardware.media.c2-mtk-service
-
+# Input
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.xml
+
+# IPSEC
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
+    frameworks/native/data/etc/android.software.ipsec_tunnel_migration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnel_migration.xml
 
 # Overlays
 PRODUCT_PACKAGES += \
-    FrameworksResOverlayAir \
-    SettingsResOverlayAir \
-    SystemUIOverlayAir \
-    TetheringConfigOverlayAir \
-    WifiOverlayAir
+    FrameworksResOverlayTornado \
+    SettingsResOverlayTornado \
+    SystemUIOverlayTornado \
+    TetheringConfigOverlayTornado \
+    WifiOverlayTornado
 
 PRODUCT_PACKAGES += \
     NcmTetheringOverlay
-
-PRODUCT_ENFORCE_RRO_TARGETS := *
-
-# Keylayout
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/keylayout/,$(TARGET_COPY_OUT_VENDOR)/usr/keylayout)
-
-# Keymaster
-PRODUCT_PACKAGES += \
-    libkeymaster_messages.vendor \
-    libkeymaster_portable.vendor
-
-# Keymint
-PRODUCT_PACKAGES += \
-    android.hardware.security.keymint-V3-ndk.vendor \
-    lib_android_keymaster_keymint_utils.vendor \
-    libcppbor_external.vendor \
-    libkeymint.vendor
-
-PRODUCT_PACKAGES += \
-    android.hardware.hardware_keystore_V2.xml
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.keystore.app_attest_key.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.keystore.app_attest_key.xml \
-    frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
-
-# Radio
-PRODUCT_PACKAGES += \
-    vendor_mdota_symlink
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml \
-    frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
-    frameworks/native/data/etc/android.software.ipsec_tunnel_migration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnel_migration.xml
 
 # Power
 PRODUCT_PACKAGES += \
@@ -255,7 +199,7 @@ PRODUCT_PACKAGES += \
 
 # Power configurations
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
+    $(DEVICE_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
 # Public libraries
 PRODUCT_COPY_FILES += \
@@ -271,7 +215,8 @@ PRODUCT_PACKAGES += \
     libsensorndkbridge
 
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/configs/hals.conf:$(TARGET_COPY_OUT_ODM)/etc/sensors/hals.conf \
+    $(DEVICE_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf \
+    $(DEVICE_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_ODM)/etc/sensors/hals.conf \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.gyroscope.xml \
@@ -280,17 +225,11 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepcounter.xml \
     frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepdetector.xml
 
-# Soong namespaces
-PRODUCT_SOONG_NAMESPACES += \
-    $(DEVICE_PATH) \
-    hardware/google/pixel \
-    hardware/google/interfaces \
-    hardware/lineage/interfaces/power-libperfmgr \
-    hardware/mediatek \
-    hardware/mediatek/hidl/mtkpower/1.2/default \
-    hardware/mediatek/libaedv \
-    hardware/mediatek/libmtkperf_client \
-    hardware/xiaomi
+# Shims & Compatibility
+PRODUCT_PACKAGES += \
+    libtinyxml2-v34 \
+    libprocessgroup_shim \
+    libbase_shim
 
 # USB
 $(call soong_config_set_bool,android_hardware_mediatek_usb,audio_accessory_supported,true)
@@ -305,8 +244,8 @@ PRODUCT_COPY_FILES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal-service.pixel \
-    thermal_symlinks
+    android.hardware.thermal-service.mediatek \
+    thermal_symlinks_mediatek
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
@@ -339,4 +278,4 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml
 
 # Inherit the proprietary files
-$(call inherit-product, vendor/xiaomi/air/air-vendor.mk)
+$(call inherit-product, vendor/xiaomi/tornado/tornado-vendor.mk)

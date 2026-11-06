@@ -1,0 +1,12 @@
+type lc_wifi_sar, domain;
+type lc_wifi_sar_exec, exec_type, file_type, vendor_file_type;
+
+init_daemon_domain(lc_wifi_sar)
+
+allow lc_wifi_sar self:capability net_admin;
+allow lc_wifi_sar self:udp_socket { create ioctl };
+allow lc_wifi_sar self:netlink_socket { read write create bind };
+allow lc_wifi_sar sysfs:file r_file_perms;
+
+set_prop(lc_wifi_sar, vendor_lc_wifi_sar_server_prop)
+set_prop(vendor_init, vendor_lc_wifi_sar_server_prop)

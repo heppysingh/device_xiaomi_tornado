@@ -1,0 +1,2 @@
+# Wi-Fi SAR
+vendor.lc_wifi_sar_server.ready    u:object_r:vendor_lc_wifi_sar_server_prop:s0

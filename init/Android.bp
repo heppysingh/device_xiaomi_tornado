@@ -106,3 +106,17 @@ prebuilt_etc {
     src: "ueventd.mt6835.rc",
     vendor: true,
 }
+
+prebuilt_etc {
+    name: "init.batterysecret.rc",
+    src: "init.batterysecret.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.fingerprint.rc",
+    src: "init.fingerprint.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}

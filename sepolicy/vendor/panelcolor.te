@@ -1,0 +1,6 @@
+type panelcolor_bin, domain;
+type panelcolor_bin_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(panelcolor_bin)
+
+allow panelcolor_bin proc:file r_file_perms;

@@ -1,0 +1,43 @@
+/(vendor|system/vendor)/bin/hw/android\.hardware\.power-service\.(lineage|pixel)-libperfmgr u:object_r:hal_power_default_exec:s0
+
+# Thermal
+/(vendor|system/vendor)/bin/hw/android\.hardware\.thermal-service\.mediatek u:object_r:hal_thermal_default_exec:s0
+/(vendor|system/vendor)/bin/thermal_symlinks_mediatek                     u:object_r:init-thermal-symlinks-sh_exec:s0
+
+# Display & PQ
+/sys/devices/virtual/mi_display/disp_feature(/.*)?                        u:object_r:vendor_sysfs_displayfeature:s0
+/sys/devices/platform/soc/14000000\.dispsys_config(/.*)?                  u:object_r:vendor_sysfs_displayfeature:s0
+/sys/devices/platform/soc/soc:dispsys_config(/.*)?                        u:object_r:vendor_sysfs_displayfeature:s0
+/sys/class/drm/card0-DSI-1/panel_info                                     u:object_r:vendor_sysfs_displayfeature:s0
+
+# Sensors
+/(vendor|system/vendor)/bin/hw/android\.hardware\.sensors-service\.xiaomi-multihal u:object_r:hal_sensors_default_exec:s0
+
+# Wi-Fi SAR
+/(vendor|system/vendor)/bin/lc_wifi_sar_server    u:object_r:lc_wifi_sar_exec:s0
+/(vendor|system/vendor)/bin/lc_wifi_sar_client    u:object_r:lc_wifi_sar_exec:s0
+
+# Fingerprint
+/(vendor|system/vendor)/bin/hw/vendor\.silead\.hardware\.fingerprintext@1\.0-service u:object_r:hal_fingerprint_default_exec:s0
+
+# Keymint & Identity
+/(vendor|system/vendor)/bin/hw/android\.hardware\.security\.keymint@2\.0-service\.mitee u:object_r:hal_keymint_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.identity-service\.mitee@4\.0          u:object_r:hal_identity_default_exec:s0
+
+# Battery & Charging
+/(vendor|system/vendor)/bin/batterysecret                                         u:object_r:batterysecret_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.xiaomi\.hardware\.micharge@1\.0-service    u:object_r:hal_micharge_default_exec:s0
+
+# NFC
+/(vendor|system/vendor)/bin/hw/android\.hardware\.nfc-service-tms                 u:object_r:hal_nfc_default_exec:s0
+/dev/tms_nfc                                                                     u:object_r:st21nfc_device:s0
+
+# Panel Color
+/(vendor|system/vendor)/bin/panelcolor_bin                                        u:object_r:panelcolor_bin_exec:s0
+
+
+
+
+
+
+

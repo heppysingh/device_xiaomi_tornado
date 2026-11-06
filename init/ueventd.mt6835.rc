@@ -199,3 +199,9 @@
 
 #dynamic sensor
 /dev/hidraw*   0660 system system
+
+# Fingerprint
+/dev/spidev1.0            0660   system     system
+/dev/spidev0.0            0660   system     system
+/dev/silead_fp            0660   system     system
+/dev/goodix_fp            0660   system     system
