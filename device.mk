@@ -17,7 +17,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
 
 # Inherit common MediaTek IMS
-$(call inherit-product, vendor/mediatek/ims/ims.mk)
+$(call inherit-product-if-exists, vendor/mediatek/ims/ims.mk)
 
 DEVICE_PATH := device/xiaomi/tornado
 
