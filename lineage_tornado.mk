@@ -18,7 +18,7 @@ PRODUCT_NAME := lineage_tornado
 PRODUCT_DEVICE := tornado
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_BRAND := Redmi
-PRODUCT_MODEL := Redmi 14C 5G
+PRODUCT_MODEL := Redmi 15C 5G
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
